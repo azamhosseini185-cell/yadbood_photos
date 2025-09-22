@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="fa">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>آلبوم یادبود</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      direction: rtl;
+      padding: 12px;
+      max-width: 980px;
+      margin: auto;
+      background: #fdfdfd;
+    }
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+    p {
+      margin-bottom: 20px;
+    }
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .grid a {
+      flex: 1 1 calc(50% - 10px);
+      text-decoration: none;
+    }
+    .grid img {
+      width: 100%;
+      height: auto;
+      border-radius: 6px;
+      display: block;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+    }
+    .grid img:hover {
+      transform: scale(1.03);
+    }
+    @media(min-width:700px){
+      .grid a { flex: 1 1 calc(33.333% - 10px); }
+    }
+  </style>
+</head>
+<body>
+  <h1>آلبوم عکس یادبود</h1>
+  <p>برای دیدن تصویر بزرگ‌تر روی آن کلیک کنید.</p>
+
+  <div id="gallery" class="grid">در حال بارگذاری…</div>
+
+  <script>
+    // عکس‌ها از فایل images.json خوانده می‌شوند
+    fetch('images.json')
+      .then(r => r.json())
+      .then(list => {
+        const g = document.getElementById('gallery');
+        g.innerHTML = '';
+        list.forEach(name => {
+          const a = document.createElement('a');
+          a.href = 'images/' + name;
+          a.target = '_blank';
+          const img = document.createElement('img');
+          img.src = 'images/' + name;
+          img.alt = name;
+          a.appendChild(img);
+          g.appendChild(a);
+        });
+      })
+      .catch(err => {
+        document.getElementById('gallery').innerText = 'مشکل در بارگذاری عکس‌ها';
+        console.error(err);
+      });
+  </script>
+</body>
+</html>
